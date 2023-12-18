@@ -11,3 +11,17 @@ class Review:
     @property
     def rating(self):
         return self._rating
+    
+    @property
+    def all(cls): # return all reviews in the list
+        return [review for review in cls.reviews]
+    
+    @property
+    def customer(self): # returns the object for particular customer
+        return self._customer
+    
+    @property
+    def restaurant(self): # returns the object of a restaurant.
+        return self._restaurant
+
+    
