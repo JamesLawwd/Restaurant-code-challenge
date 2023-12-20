@@ -1,27 +1,110 @@
 import ipdb
-from review import Review
+import sqlite3
 from restaurant import Restaurant
 from customer import Customer
+from review import Review
 
-# new instances of customer
-kinyanjui = Customer("kinyanjui", "James")
-wangeshi = Customer("wangeshi", "winnie")
-wangari = Customer("wangari", "sheenel")
+def test_average_star_rating():
+    # Test the average star rating calculation
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
 
-Customer.all   # kinyanjui.find_by_name
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
 
-restaurant1 = Restaurant("5 star")
-restaurant2 = Restaurant("Everywhere")
-review1 = Review(kinyanjui,restaurant1,3)
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
 
-# print the number of reviews for each customer
+    ipdb.set_trace()  # Start debugging
+    assert restaurant1.average_star_rating == (4 + 5) / 2
+    assert restaurant2.average_star_rating == 3
 
-print(review1.all_reviews)
+def test_customer_reviews():
+    # Test the unique list of restaurants a customer has reviewed
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
 
-# customer review
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
 
-review2 = Review(wangeshi,restaurant2, 2)
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
 
+    ipdb.set_trace()  # Start debugging
+    assert customer1.restaurants == [restaurant1, restaurant2]
+    assert customer2.restaurants == [restaurant1]
 
-for review in Review.all():
-    print(f"Review Rating: {review.rating}, Customer Data: {review._customer.__dict__}, Restaurant Data: {review._restaurant.__dict__}")
+def test_add_review():
+    # Test adding a review to a customer
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
+
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
+
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
+
+    ipdb.set_trace()  # Start debugging
+    assert customer1.num_reviews() == 2
+    assert customer2.num_reviews() == 1
+
+def test_find_by_name():
+    # Test finding a customer by name
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
+
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
+
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
+
+    ipdb.set_trace()  # Start debugging
+    found_customer = Customer.find_by_name("John Doe")
+    assert found_customer == customer1
+
+def test_find_all_by_given_name():
+    # Test finding all customers with a given name
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
+
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
+
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
+
+    ipdb.set_trace()  # Start debugging
+    found_customers = Customer.find_all_by_given_name("John")
+    assert found_customers == [customer1]
+
+def test_review_properties():
+    # Test review properties
+    restaurant1 = Restaurant("Restaurant 1")
+    restaurant2 = Restaurant("Restaurant 2")
+
+    customer1 = Customer("James", "kinyanjui")
+    customer2 = Customer("Peter", "luis")
+
+    review1 = Review(customer1, restaurant1, 4)
+    review2 = Review(customer2, restaurant1, 5)
+    review3 = Review(customer1, restaurant2, 3)
+
+    ipdb.set_trace()  # Start debugging
+    assert review1.rating == 4
+    assert review1.customer == customer1
+    assert review1.restaurant == restaurant1
+
+if __name__ == '__main__':
+    test_average_star_rating()
+    test_customer_reviews()
+    test_add_review()
+    test_find_by_name()
+    test_find_all_by_given_name()
+    test_review_properties()
