@@ -1,4 +1,4 @@
-from .review import Review
+from review import Review
 
 
 class Customer:
